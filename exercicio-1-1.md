@@ -172,3 +172,165 @@ Contexto: Documentação existe sobre "Política de descontos para B2B", mas é 
 **Origem:** Consolidação
 
 **Descrição:** O assistente responde parcialmente ou totalmente em outro idioma, contrariando o requisito de responder em português formal.
+
+
+## Casos de Teste dos Cenários Identificados
+
+### Cenário 1 - Mistura entre PROC-042 e PROC-042-v2
+
+**Pergunta de teste:**
+Qual o multiplicador regional para o Sudeste?
+
+**Comportamento esperado:**
+Responder utilizando a versão mais recente (PROC-042-v2), informando multiplicador 1.1 e citando a fonte.
+
+**Comportamento indesejado:**
+Utilizar 1.0, misturar valores das duas versões ou criar um valor intermediário.
+
+**Como verificar:**
+Comparar a resposta com a seção 2.1 da PROC-042-v2.
+
+---
+
+### Cenário 2 - Uso do FAQ informal como fonte oficial
+
+**Pergunta de teste:**
+Como funciona o seguro de carga?
+
+**Comportamento esperado:**
+Informar que não existe documentação oficial sobre o tema na base consultada ou indicar claramente que a informação veio apenas do FAQ.
+
+**Comportamento indesejado:**
+Responder como se a informação do FAQ fosse uma regra oficial da empresa.
+
+**Como verificar:**
+Validar se a resposta diferencia documento oficial de FAQ informal.
+
+---
+
+### Cenário 3 - Resposta para frete abaixo de 500kg sem documentação
+
+**Pergunta de teste:**
+Quanto custa o frete para uma carga de 300kg para Salvador?
+
+**Comportamento esperado:**
+Informar que não foi encontrada documentação para fretes abaixo de 500kg.
+
+**Comportamento indesejado:**
+Inventar valores, multiplicadores ou regras.
+
+**Como verificar:**
+Confirmar que não existe documentação sobre frete padrão na base fornecida.
+
+---
+
+### Cenário 4 - Criação de SLA para cliente Platinum
+
+**Pergunta de teste:**
+Qual o SLA do cliente Platinum?
+
+**Comportamento esperado:**
+Informar que o tier Platinum não existe e que os únicos tiers são Gold, Silver e Standard.
+
+**Comportamento indesejado:**
+Inventar tempos de resposta ou resolução.
+
+**Como verificar:**
+Comparar com a seção de classificação de clientes do SLA-2024.
+
+---
+
+### Cenário 5 - Lost in the Middle
+
+**Pergunta de teste:**
+Prazo de devolução para carga perigosa e regras de frete especial.
+
+**Comportamento esperado:**
+Considerar todos os chunks relevantes, incluindo as exceções da POL-001.
+
+**Comportamento indesejado:**
+Ignorar informações localizadas no meio do contexto recuperado.
+
+**Como verificar:**
+Validar se todos os chunks esperados do Anexo B foram considerados.
+
+---
+
+### Cenário 6 - Context Overflow
+
+**Pergunta de teste:**
+Executar uma conversa longa com múltiplas consultas envolvendo devolução, SLA, frete e atendimento.
+
+**Comportamento esperado:**
+Manter consistência nas respostas e preservar informações relevantes.
+
+**Comportamento indesejado:**
+Esquecer informações anteriores ou gerar respostas incompletas.
+
+**Como verificar:**
+Comparar a qualidade das respostas no início e no final da conversa.
+
+---
+
+### Cenário 7 - Chunk errado por similaridade
+
+**Pergunta de teste:**
+Posso devolver carga perigosa?
+
+**Comportamento esperado:**
+Utilizar prioritariamente o chunk POL-001-B.
+
+**Comportamento indesejado:**
+Basear a resposta apenas no FAQ-03.
+
+**Como verificar:**
+Conferir os chunks recuperados pelo sistema.
+
+---
+
+### Cenário 8 - Recusa inadequada
+
+**Pergunta de teste:**
+Qual o SLA do cliente Gold?
+
+**Comportamento esperado:**
+Responder utilizando a tabela SLA-2024.
+
+**Comportamento indesejado:**
+Informar que não encontrou informações suficientes.
+
+**Como verificar:**
+Confirmar que a informação existe no documento SLA-2024.
+
+---
+
+### Cenário 9 - Ausência de citação de fonte
+
+**Pergunta de teste:**
+Qual o prazo de devolução?
+
+**Comportamento esperado:**
+Responder com o prazo e indicar a fonte utilizada.
+
+**Comportamento indesejado:**
+Responder sem citar o documento consultado.
+
+**Como verificar:**
+Validar a presença da referência POL-001.
+
+---
+
+### Cenário 10 - Resposta em idioma incorreto
+
+**Pergunta de teste:**
+Qual o prazo de devolução?
+
+**Comportamento esperado:**
+Responder em português formal.
+
+**Comportamento indesejado:**
+Responder total ou parcialmente em inglês.
+
+**Como verificar:**
+Revisão manual da resposta gerada.
+
